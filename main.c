@@ -11,6 +11,7 @@ typedef unsigned char NUM_BITS;
 #define NUM_MEMORY 100
 
 int strequal(char* a, const char* b) { return strcmp(a, b) == 0; }
+int isinstruction(char* a, const char* b) { return a[0] == b[0] && a[1] == b[1] && a[2] == b[2]; }
 
 struct LMC {
     NUM_BITS memory [NUM_MEMORY];
@@ -26,7 +27,7 @@ int main() {
 
     LMC lmc;
 
-    while (! strequal(input, "HLT")) {
+    while (! isinstruction(input, "HLT")) {
 
         fgets(input, MAX_INPUT, stdin);
         // Removing \n from input string
@@ -36,7 +37,7 @@ int main() {
 
         int space_index = -1;
         for (int i = 0; i < input_len; i++) {
-            if (input[space_index] == ' ') {
+            if (input[i] == ' ') {
                 space_index = i;
                 break;
             }
@@ -45,9 +46,9 @@ int main() {
         // If no space was found, it's an instruction with no parameters
         if (space_index == -1) {
 
-            // LOAD
-            if (strequal(input, "LDA")) {
+            // INPUT
 
+            if (isinstruction(input, "INP")) {
                 printf("$: ");
                 fgets(input, MAX_INPUT, stdin);
                 int input_len = strlen(input);
@@ -55,14 +56,29 @@ int main() {
 
                 lmc.accumulator = atoi(input);
             }
+
             // OUTPUT
-            else if (strequal(input, "OUT")) {
+
+            else if (isinstruction(input, "OUT")) {
                 printf("%i\n", lmc.accumulator);
             }
         }
         // Otherwise, it's a function with parameters
         else {
 
+            // LOAD
+
+            if (isinstruction(input, "LDA")) {
+                int address = atoi(& input[4]);
+                lmc.accumulator = lmc.memory[address];
+            }
+
+            // STORE
+
+            else if (isinstruction(input, "STA")) {
+                int address = atoi(& input[4]);
+                lmc.memory[address] = lmc.accumulator;
+            }
         }
 
     }
