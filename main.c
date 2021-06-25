@@ -1,3 +1,13 @@
+// @ NOTE
+// DAT only implementable when lmc is not line by line executed.
+
+// @ TODO
+// ADD
+// SUB
+// BRA
+// BRZ
+// BRP
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -65,6 +75,18 @@ int main() {
         }
         // Otherwise, it's a function with parameters
         else {
+
+            // ADD
+            if (isinstruction(input, "ADD")) {
+                int address = atoi(& input[4]);
+                lmc.accumulator += lmc.memory[address];
+            }
+
+            // SUB
+            if (isinstruction(input, "SUB")) {
+                int address = atoi(& input[4]);
+                lmc.accumulator -= lmc.memory[address];
+            }
 
             // LOAD
 
