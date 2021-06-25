@@ -1,12 +1,6 @@
 // @ NOTE
 // DAT only implementable when lmc is not line by line executed.
-
-// @ TODO
-// ADD
-// SUB
-// BRA
-// BRZ
-// BRP
+// same with BRA, BRZ, and BRP
 
 #include <stdio.h>
 #include <string.h>
